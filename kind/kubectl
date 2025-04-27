@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+exec podman run --rm \
+  -v "${HOME}/.kube:/root/.kube:Z" \
+  -v "$(pwd):/workdir:Z" \
+  bitnami/kubectl:latest \
+  kubectl "$@"
