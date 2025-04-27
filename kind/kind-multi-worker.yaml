@@ -4,3 +4,5 @@ nodes:
   - role: control-plane
   - role: worker
   - role: worker
+
+# kind create cluster --config kind-multi-worker.yaml 이렇게 사용함. 마스터 한개, 워커 2개.
