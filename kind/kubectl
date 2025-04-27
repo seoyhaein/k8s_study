@@ -4,7 +4,9 @@
 if [ ! -d "${HOME}/.kube" ]; then
   mkdir -p "${HOME}/.kube"
 fi
-
+# 지금 나는 ubuntu 를 사용해서 SELinux 가 없어서 :Z 상관없지만, 기억용으로 넣어둠.  다른 프로젝트에도 적용해야함.
+# alpine 에서는 SELinux 아예 지원하지 않음.
+# 컨테이너 내 사용자와 호스트 파일 소유자 불일치 발생 가능성 있음. 이 문제 해결하자.
 exec podman run --rm \
   -v "${HOME}/.kube:/root/.kube:Z" \
   -v "$(pwd):/workdir:Z" \
