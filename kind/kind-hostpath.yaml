@@ -1,0 +1,11 @@
+apiVersion: kind.x-k8s.io/v1alpha4
+kind: Cluster
+nodes:
+  - role: control-plane
+    extraMounts:
+      - hostPath: /tmp/kind-demo      # 호스트 디렉터리
+        containerPath: /mnt/hostpath  # 노드 컨테이너 안 경로
+  - role: worker
+    extraMounts:
+      - hostPath: /tmp/kind-demo
+        containerPath: /mnt/hostpath

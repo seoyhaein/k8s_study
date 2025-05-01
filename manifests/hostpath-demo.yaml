@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hostpath-demo
+  namespace: hostpath-demo   # 같은 이름의 네임스페이스를 참조
+spec:
+  containers:
+  - name: busybox
+    image: busybox
+    command:
+      - sh
+      - -c
+      - |
+        echo "== /data 내용 =="
+        ls /data
+        echo
+        echo "== /data/hello.txt 내용 =="
+        cat /data/hello.txt
+        sleep 3600
+    resources:                      
+      requests:
+        cpu:    50m # 0.05 CPU (CPU 코어의 5%) 가 최소 보장
+        memory: 64Mi # 최소 64 MiB 메모리 보장
+      limits:
+        cpu:    100m # 0.1 CPU (CPU 코어의 10%) 가 최대 사용 가능
+        memory: 128Mi # 최대 128 MiB 메모리 사용, 만약 초과하면, OOM(Killed) 상태가 됨
+    volumeMounts:
+    - mountPath: /data
+      name: hostvol
+  volumes:
+  - name: hostvol
+    hostPath:
+      path: /mnt/hostpath
+      type: Directory
+
+# 요청 50m/64Mi, 제한 100m/128Mi
+# hostPath 데모처럼 단순하게 파일만 읽는 아주 가벼운 데모용·디버깅용 컨테이너에 적용하기 때문에 이렇게 함. echo.yaml 과 비교.
+# 클러스터에 리소스 쿼터(ResourceQuota) 가 걸려 있으면, 너무 큰 요청(requests)을 잡아두면 다른 파드들이 스케줄되지 못할 수 있고
+# 반대로 너무 작은 제한(limits)을 걸면, 순간적인 CPU 부하나 메모리 할당 급증 시 OOMKilled나 CPU 스로틀링이 발생할 수 있다.
+# podman 에서 관련 코드를 만들어 봤지만, 경험해보지는 못했는데, 한번 경험 할 수 있는 테스트를 진행 해보는 것도 괜찮을 듯 하다.
