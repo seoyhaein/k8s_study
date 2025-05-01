@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: echo
-        image: ealen/echo-server:v1.26.0 # 명시적으로 version 을 달아주는 Immutable Infrastructure 에 맞음.
+        image: ealen/echo-server:0.9.2 # 명시적으로 version 을 달아주는 Immutable Infrastructure 에 맞음.
         imagePullPolicy: IfNotPresent    # 불필요한 이미지 풀 방지
         ports:
         - containerPort: 80  # 단지 “이 컨테이너는 이 포트를 쓴다” 라는 선언적 메타데이터일 뿐이므로, 외부 접근용 포트 매핑은 Service (ClusterIP/NodePort/LoadBalancer) 혹은 hostPort를 사용해야함.

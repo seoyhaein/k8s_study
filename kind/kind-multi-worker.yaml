@@ -5,6 +5,13 @@ nodes:
     labels:
       ingress-ready: "true"
       kubernetes.io/os: "linux"
+    extraPortMappings:
+      - containerPort: 80
+        hostPort:      80
+        protocol:      TCP
+      - containerPort: 443
+        hostPort:      443
+        protocol:      TCP
   - role: worker
     labels:
       kubernetes.io/os: "linux"
@@ -14,3 +21,4 @@ nodes:
 
 
 # kind create cluster --config kind-multi-worker.yaml 이렇게 사용함. 마스터 한개, 워커 2개.
+# 443 포트의 경우 tls 사용할 것을 대비해서 넣어둠. 
