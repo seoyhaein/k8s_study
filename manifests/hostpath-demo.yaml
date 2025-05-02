@@ -4,6 +4,11 @@ metadata:
   name: hostpath-demo
   namespace: hostpath-demo   # 같은 이름의 네임스페이스를 참조
 spec:
+  volumes:
+  - name: hostvol
+    hostPath:
+      path: /mnt/hostpath # 실제 호스트 폴더.
+      type: Directory
   containers:
   - name: busybox
     image: busybox
@@ -25,13 +30,9 @@ spec:
         cpu:    100m # 0.1 CPU (CPU 코어의 10%) 가 최대 사용 가능
         memory: 128Mi # 최대 128 MiB 메모리 사용, 만약 초과하면, OOM(Killed) 상태가 됨
     volumeMounts:
-    - mountPath: /data
-      name: hostvol
-  volumes:
-  - name: hostvol
-    hostPath:
-      path: /mnt/hostpath
-      type: Directory
+    - name: hostvol
+      mountPath: /data
+  
 
 # 요청 50m/64Mi, 제한 100m/128Mi
 # hostPath 데모처럼 단순하게 파일만 읽는 아주 가벼운 데모용·디버깅용 컨테이너에 적용하기 때문에 이렇게 함. echo.yaml 과 비교.
