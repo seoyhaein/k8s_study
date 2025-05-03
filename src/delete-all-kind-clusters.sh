@@ -18,3 +18,6 @@ for cluster in $clusters; do
 done
 
 echo "✅ All Kind clusters deleted."
+
+## pod 만 지우고 다시 하는 shell script 도 만들어 줘야 함. 일단 지금은 이렇게 함.
+

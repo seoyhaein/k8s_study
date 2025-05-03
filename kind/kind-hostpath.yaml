@@ -3,9 +3,9 @@ kind: Cluster
 nodes:
   - role: control-plane
     extraMounts:
-      - hostPath: /tmp/kind-demo      # 호스트 디렉터리
-        containerPath: /mnt/hostpath  # 노드 컨테이너 안 경로
+      - hostPath: /mnt/kind-demo      # 호스트 디렉터리
+        containerPath: /mnt/kind-demo  # 노드 컨테이너 안 경로
   - role: worker
     extraMounts:
-      - hostPath: /tmp/kind-demo
-        containerPath: /mnt/hostpath
+      - hostPath: /mnt/kind-demo
+        containerPath: /mnt/kind-demo

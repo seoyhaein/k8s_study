@@ -7,7 +7,7 @@ spec:
   volumes:
   - name: hostvol
     hostPath:
-      path: /mnt/hostpath # 실제 호스트 폴더.
+      path: /mnt/kind-demo # 실제 호스트 폴더.
       type: Directory
   containers:
   - name: busybox
