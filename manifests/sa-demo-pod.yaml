@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sa-test
+  namespace: sa-demo
+spec:
+  serviceAccountName: demo-sa
+  containers:
+  - name: tester
+    image: curlimages/curl
+    resources:
+      requests:
+        cpu:    10m    # 최소 0.01 CPU
+        memory: 32Mi   # 최소 32MiB 메모리
+      limits:
+        cpu:    50m    # 최대 0.05 CPU
+        memory: 64Mi   # 최대 64MiB 메모리
+    command:
+      - sh
+      - -c
+      - |
+        echo "=== Mounted Token ==="
+        cat /var/run/secrets/kubernetes.io/serviceaccount/token
+        echo; echo "=== API Call ==="
+        curl -sSk \
+          -H "Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" \
+          https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT/api/v1/namespaces/sa-demo/pods
+        sleep 3600
