@@ -14,11 +14,15 @@ if [ ! -f "$KUBEDIR/config" ]; then
   echo "Proceeding without existing or valid config."
 fi
 
+# Pre-check: script identification
+echo "▶ $(basename "$0") v1.0.0 - wrapper script for kubectl"
+
 # Run kubectl in a container, passing all arguments ($@) directly to kubectl
 exec docker run --rm \
   --network host \
   --user root \
   -v "${KUBEDIR}:/root/.kube" \
+  -v "/opt/.kube:/opt/.kube" \
   -v "$(pwd):/workdir" \
   -e KUBECONFIG=/root/.kube/config \
   -w /workdir \
